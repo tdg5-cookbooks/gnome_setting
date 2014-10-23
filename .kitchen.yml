@@ -1,0 +1,19 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+  cookbook_paths:
+    - test/cookbooks
+
+platforms:
+  - name: gnome
+    driver:
+      box: ubuntu-gnome-14.04.1-desktop-amd64
+
+suites:
+  - name: gnome_setting
+    run_list:
+      - recipe[gnome_setting_test]
+    attributes:

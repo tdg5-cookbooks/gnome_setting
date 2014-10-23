@@ -1,0 +1,11 @@
+DEPENDENCIES
+  gnome_setting
+    path: .
+    metadata: true
+  gnome_setting_test
+    path: test/cookbooks/gnome_setting_test
+
+GRAPH
+  gnome_setting (0.0.1)
+  gnome_setting_test (0.0.1)
+    gnome_setting (>= 0.0.0)
