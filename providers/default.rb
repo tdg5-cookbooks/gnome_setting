@@ -6,13 +6,17 @@ action :set do
   setting = Gnome::Setting.new(user, schema, path)
   current_value = setting.get(key)
   id = "#{schema}#{":#{path}" if path} #{key} for #{user}"
-  if current_value != value
-    converge_by("Setting Gnome setting #{id} to #{value}") do
+  if current_value != serialize_gvariant(value)
+    converge_by("Setting Gnome setting #{id} to #{value} from #{current_value}") do
       setting.set(key, value)
     end
   else
     Chef::Log.debug("Gnome setting for #{id} already set to #{value}")
   end
+end
+
+def serialize_gvariant(value)
+  value.inspect.gsub(/"/, "'")
 end
 
 def whyrun_supported?

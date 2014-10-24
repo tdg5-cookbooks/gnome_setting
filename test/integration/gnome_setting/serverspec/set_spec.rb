@@ -36,7 +36,7 @@ describe 'gnome_setting' do
   def test_setting(setting)
     gsetting = Gnome::Setting.new(setting[:user], setting[:schema], setting[:path])
     expected_value = format_as_serialized_gvariant(setting[:value])
-    found = gsetting.get(setting[:key], setting[:path])
+    found = gsetting.get(setting[:key])
     expect(found).to eql(expected_value)
   end
 

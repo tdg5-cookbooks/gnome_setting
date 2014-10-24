@@ -2,7 +2,7 @@ module Gnome
   class Setting
     attr_reader :path, :schema, :type, :user
 
-    def get(key, path = nil)
+    def get(key)
       `#{generate_command(user, :get, schema, path, key)}`.strip
     end
 
