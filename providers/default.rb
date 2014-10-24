@@ -1,13 +1,20 @@
 require ::File.expand_path('../../libraries/setting', __FILE__)
 
 action :set do
-  setting = Gnome::Setting.new(new_resource.user, new_resource.schema, new_resource.path)
+  path, schema, user = new_resource.path, new_resource.schema, new_resource.user
   key, value = new_resource.key, new_resource.value
+  setting = Gnome::Setting.new(user, schema, path)
   current_value = setting.get(key)
-  Chef::Log.debug("Current value for gnome setting #{new_resource.key}: #{current_value}")
-  Chef::Log.debug("Expected value for gnome setting #{new_resource.key}: #{value}")
+  id = "#{schema}#{":#{path}" if path} #{key} for #{user}"
   if current_value != value
-    setting.set(key, value)
-    new_resource.updated_by_last_action(true)
+    converge_by("Setting Gnome setting #{id} to #{value}") do
+      setting.set(key, value)
+    end
+  else
+    Chef::Log.debug("Gnome setting for #{id} already set to #{value}")
   end
+end
+
+def whyrun_supported?
+  true
 end
