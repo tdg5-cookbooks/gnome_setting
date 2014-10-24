@@ -7,6 +7,11 @@ describe 'gnome_setting' do
 
   describe 'a schema without a path' do
 
+    it 'sets a key with a Boolean datatype' do
+      test_setting(GnomeSettingHelper.settings[:schema_without_path_boolean])
+    end
+
+
     it 'sets a key with a String datatype' do
       test_setting(GnomeSettingHelper.settings[:schema_without_path_array_of_strings])
     end
@@ -28,14 +33,9 @@ describe 'gnome_setting' do
   end
 
 
-  def format_as_serialized_gvariant(value)
-    value.inspect.gsub(/"/, "'")
-  end
-
-
   def test_setting(setting)
     gsetting = Gnome::Setting.new(setting[:user], setting[:schema], setting[:path])
-    expected_value = format_as_serialized_gvariant(setting[:value])
+    expected_value = Gnome::Setting.dump_value_as_serialized_gvariant(setting[:value])
     found = gsetting.get(setting[:key])
     expect(found).to eql(expected_value)
   end

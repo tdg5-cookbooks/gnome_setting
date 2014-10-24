@@ -13,6 +13,12 @@ module GnomeSettingHelper
   # Settings to test with. The constant is self referential, so should probably
   # be defined last.
   SETTINGS = {
+    :schema_without_path_boolean => {
+      :key => 'clock-show-date',
+      :schema => 'org.gnome.desktop.interface',
+      :user => username,
+      :value => true,
+    },
     :schema_without_path_string => {
       :key => 'session-name',
       :schema => 'org.gnome.desktop.session',
