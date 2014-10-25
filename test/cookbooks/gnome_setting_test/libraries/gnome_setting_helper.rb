@@ -19,11 +19,29 @@ module GnomeSettingHelper
       :user => username,
       :value => true,
     },
+    :schema_without_path_integer => {
+      :key => 'text-ellipsis-limit',
+      :schema => 'org.gnome.nautilus.desktop',
+      :user => username,
+      :value => 5,
+    },
+    :schema_without_path_float => {
+      :key => 'difficulty',
+      :schema => 'org.gnome.gnome-sudoku',
+      :user => username,
+      :value => 10.0,
+    },
     :schema_without_path_string => {
       :key => 'session-name',
       :schema => 'org.gnome.desktop.session',
       :user => username,
-      :value => 'gnome',
+      :value => "gnome",
+    },
+    :schema_without_path_string_with_quotes => {
+      :key => 'network-icon-name',
+      :schema => 'org.gnome.nautilus.desktop',
+      :user => username,
+      :value => %q[it's "gnome" time],
     },
     :schema_without_path_array_of_strings => {
       :key => 'favorite-apps',

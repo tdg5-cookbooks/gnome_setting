@@ -4,12 +4,11 @@ module Gnome
 
     def self.dump_value_as_serialized_gvariant(value)
       if value.is_a?(String)
-        "'#{value}'"
+        # gsettings prefers single quotes for strings without apostrophes
+        /'/ === value ? value.inspect : "'#{value}'"
       elsif value.is_a?(Array)
-        # TODO: Find a better way to do this
-        value.inspect.gsub(/"/, "'")
-      elsif value.is_a?(Integer) || value.is_a?(Float)
-        value
+        values = value.map { |item| dump_value_as_serialized_gvariant(item) }
+        %Q([#{values.join(', ')}])
       else
         value.to_s
       end
@@ -34,10 +33,7 @@ module Gnome
       cmd << "sudo -i -u #{user} --" if user
       cmd << "dbus-launch gsettings #{action} #{schema}#{":#{path}" if path}"
       cmd << key
-      if value
-        value = self.class.dump_value_as_serialized_gvariant(value)
-        cmd << value
-      end
+      cmd << value if value
       cmd << '2>/dev/null'
       cmd.join(' ')
     end

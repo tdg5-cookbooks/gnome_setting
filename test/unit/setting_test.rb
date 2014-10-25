@@ -18,7 +18,7 @@ class SettingTest < Minitest::Unit::TestCase
     value = "'Launch Terminal'"
     setting = Gnome::Setting.new('tdg5', schema, path)
     setting.set(key, value)
-    assert_equal value, setting.get(key, path)
+    assert_equal value, setting.get(key)
   end
 
   def test_can_target_differnt_users

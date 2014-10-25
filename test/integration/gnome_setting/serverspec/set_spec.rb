@@ -12,13 +12,28 @@ describe 'gnome_setting' do
     end
 
 
+    it 'sets a key with a Float datatype' do
+      test_setting(GnomeSettingHelper.settings[:schema_without_path_float])
+    end
+
+
+    it 'sets a key with a Integer datatype' do
+      test_setting(GnomeSettingHelper.settings[:schema_without_path_integer])
+    end
+
+
     it 'sets a key with a String datatype' do
-      test_setting(GnomeSettingHelper.settings[:schema_without_path_array_of_strings])
+      test_setting(GnomeSettingHelper.settings[:schema_without_path_string])
+    end
+
+
+    it 'sets a key with a String datatype containing quotes' do
+      test_setting(GnomeSettingHelper.settings[:schema_without_path_string_with_quotes])
     end
 
 
     it 'sets a key with an Array<String> datatype' do
-      test_setting(GnomeSettingHelper.settings[:schema_without_path_string])
+      test_setting(GnomeSettingHelper.settings[:schema_without_path_array_of_strings])
     end
 
   end
