@@ -1,5 +1,6 @@
 module Gnome
   class Setting
+    DATATYPE_SANITIZATION_REGEX = /(u?int[0-9][0-9]|@a[sy]) /
     QUOTED_REGEX = /^(['"]).*\1$/
 
     attr_reader :path, :schema, :type, :user
@@ -17,7 +18,8 @@ module Gnome
     end
 
     def get(key)
-      `#{generate_command(user, :get, schema, path, key)}`.strip
+      value = `#{generate_command(user, :get, schema, path, key)}`.strip
+      value.gsub(DATATYPE_SANITIZATION_REGEX, '')
     end
 
     def initialize(user, schema, path = nil)
