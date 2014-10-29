@@ -1,5 +1,7 @@
 module Gnome
   class Setting
+    QUOTED_REGEX = /^(['"]).*\1$/
+
     attr_reader :path, :schema, :type, :user
 
     def self.dump_value_as_serialized_gvariant(value)
@@ -23,6 +25,8 @@ module Gnome
     end
 
     def set(key, value)
+      # Use inspect to quote the string if it isn't already quoted.
+      value = value.inspect unless QUOTED_REGEX === value
       `#{generate_command(user, :set, schema, path, key, value)}`
     end
 
