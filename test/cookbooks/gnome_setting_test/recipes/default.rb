@@ -1,7 +1,6 @@
 include_recipe  'gnome_setting'
 
 GnomeSettingHelper.settings.each_pair do |name, setting|
-  Chef::Log.warn("Adding gnome setting #{name}")
   gnome_setting name do
     action :set
     key setting[:key]
