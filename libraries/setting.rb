@@ -26,6 +26,10 @@ module Gnome
       @user, @schema, @path = user, schema, path
     end
 
+    def reset(key)
+      `#{generate_command(user, :reset, schema, path, key)}`
+    end
+
     def set(key, value)
       # Use inspect to quote the string if it isn't already quoted.
       value = value.inspect unless QUOTED_REGEX === value

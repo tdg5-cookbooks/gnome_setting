@@ -9,6 +9,7 @@ action :set do
   serialized_value = Gnome::Setting.dump_value_as_serialized_gvariant(new_resource.value)
   if current_value != serialized_value
     converge_by("Setting Gnome setting #{id} from #{current_value} to #{serialized_value}") do
+      setting.reset(key)
       setting.set(key, serialized_value)
     end
   else
